@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 
 
 /**
-  * 将原 AESCrypto改名成AESCrypto，并且移到包com.feinno.imps.crypt中，目的是推动代码复用
- * 修改人：陈春松
  * 
  * Rijndael algorithm implement of encrypt methods
  * 

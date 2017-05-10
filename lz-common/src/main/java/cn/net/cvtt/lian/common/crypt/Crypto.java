@@ -1,7 +1,6 @@
 package cn.net.cvtt.lian.common.crypt;
 
 /**
- * 将原 ISSICrypto改名成Crypto，并且移到包com.feinno.imps.crypt中，目的是推动代码复用
  * 
  * ISSICrypto
  * @author 

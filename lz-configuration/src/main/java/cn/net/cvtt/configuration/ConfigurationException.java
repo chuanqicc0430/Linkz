@@ -3,7 +3,7 @@ package cn.net.cvtt.configuration;
 /**
  * 配置异常公共类, 必须显示进行catch
  * 
- * @author lichunlei
+ * @author 
  */
 public class ConfigurationException extends Exception {
 	public ConfigurationException(String message, Throwable cause) {

@@ -14,7 +14,7 @@ import cn.net.cvtt.configuration.ConfigType;
 /**
  * ConfigUpdater
  * 
- * @author lichunlei
+ * @author 
  */
 public abstract class ConfigUpdater<E> {
 	private String path;

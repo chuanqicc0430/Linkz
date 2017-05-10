@@ -5,7 +5,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * 将原 SSIDESCrypto改名成DESCrypto，并且移到包com.feinno.imps.crypt中，目的是推动代码复用
  * 
  * @author 
  *

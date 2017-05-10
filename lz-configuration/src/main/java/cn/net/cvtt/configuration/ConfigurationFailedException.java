@@ -3,7 +3,7 @@ package cn.net.cvtt.configuration;
 /**
  * 配置失败异常, 常见于配置更新失败场合
  * 
- * @author lichunlei
+ * @author 
  */
 public class ConfigurationFailedException extends ConfigurationException
 {
