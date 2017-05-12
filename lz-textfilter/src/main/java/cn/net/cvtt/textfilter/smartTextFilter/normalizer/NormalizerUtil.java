@@ -10,19 +10,16 @@ import org.slf4j.LoggerFactory;
 
 public class NormalizerUtil {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(NormalizerUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(NormalizerUtil.class);
 
 	private static HashMap<Character, Character> fan2Jian;
 
 	private static HashMap<Character, Character> jian2Fan;
 
 	public NormalizerUtil() {
-
 		if (fan2Jian == null || jian2Fan == null) {
 			load("complex.txt", "simple.txt");
 		}
-
 	};
 
 	private void load(String pathOfFanti, String pathOfJianti) {
@@ -46,9 +43,7 @@ public class NormalizerUtil {
 	}
 
 	public StringBuffer getDictionary(String path) {
-		BufferedReader bufferReader = new BufferedReader(
-				new InputStreamReader(NormalizerUtil.class.getClassLoader()
-						.getResourceAsStream(path)));
+		BufferedReader bufferReader = new BufferedReader(new InputStreamReader(NormalizerUtil.class.getClassLoader().getResourceAsStream(path)));
 		String line;
 		StringBuffer readAll = new StringBuffer();
 		try {
@@ -129,10 +124,7 @@ public class NormalizerUtil {
 	 */
 	public static String bigToSmall(String str) {
 		/*
-		 * StringBuffer sb = new StringBuffer(str); for (int i = 0; i <
-		 * sb.length(); i++) { char c = sb.charAt(i); if
-		 * (!Character.isLetter((int)c)) continue; if (c <= 'Z' && c >= 'A')
-		 * sb.setCharAt(i, Character.toLowerCase(c)); } return sb.toString();
+		 * StringBuffer sb = new StringBuffer(str); for (int i = 0; i < sb.length(); i++) { char c = sb.charAt(i); if (!Character.isLetter((int)c)) continue; if (c <= 'Z' && c >= 'A') sb.setCharAt(i, Character.toLowerCase(c)); } return sb.toString();
 		 */
 		return str.toLowerCase();
 	}

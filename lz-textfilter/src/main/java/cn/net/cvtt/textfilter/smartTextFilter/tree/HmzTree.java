@@ -41,11 +41,13 @@ public class HmzTree {
 
 	private void loadCodeTable(List<HarmonizedWords> tables) throws IOException {
 		for (HarmonizedWords words : tables) {
-			if (!words.isEnabled() || words.getFilterType().intValue() == FilterTypeEnum.None.intValue())
+			if (!words.isEnabled() || words.getFilterType().intValue() == FilterTypeEnum.None.intValue()) {
 				continue;
+			}
 			String main = words.getWord().trim();
-			if (StringUtils.isNullOrEmpty(main))
+			if (StringUtils.isNullOrEmpty(main)) {
 				continue;
+			}
 
 			HmzNode root = null;
 			int ct = 1;
@@ -83,16 +85,22 @@ public class HmzTree {
 			}
 
 			String[] reWords = words.getRelateWords();
-			for (int i = 0; i < reWords.length; ++i) {
-				String relate = reWords[i].trim();
-				if (StringUtils.isNullOrEmpty(relate))
-					continue;
-				if (!composite)
-					ct = 2;
-				loadWord(root, relate, words.getFilterType(), words.getTreatment(), new HmzIdentity(words, relate, composite, ct));
+			if (reWords.length > 0) {
+				for (int i = 0; i < reWords.length; ++i) {
+					String relate = reWords[i].trim();
+					if (StringUtils.isNullOrEmpty(relate)) {
+						continue;
+					}
+					if (!composite) {
+						ct = 2;
+					}
+					loadWord(root, relate, words.getFilterType(), words.getTreatment(), new HmzIdentity(words, relate, composite, ct));
+				}
 			}
-			if (!composite)
+
+			if (!composite) {
 				loadWord(root, main, words.getFilterType(), words.getTreatment(), new HmzIdentity(words, main, true, ct));
+			}
 		}
 	}
 

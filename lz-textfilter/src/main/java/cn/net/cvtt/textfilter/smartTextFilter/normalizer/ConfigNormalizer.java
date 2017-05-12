@@ -7,46 +7,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigNormalizer {
-	
-	//private static final Logger logger = LoggerFactory.getLogger(ConfigNormalizer.class);
 
-    private Reader reader;
-    
-    //private String content;
+	// private static final Logger logger = LoggerFactory.getLogger(ConfigNormalizer.class);
 
-    public ConfigNormalizer(String content)
-    {
-        reader = new StringReader(content);
-    	//this.content = content;
-    }
+	private Reader reader;
 
-    public List<List<Character>> read() throws IOException
-    {
-        List<List<Character>> retr = new ArrayList<List<Character>>();
+	// private String content;
 
-        int flag = 0;
-        char[] charr = ContentNormalizer.prepareCharForNormalize();
+	public ConfigNormalizer(String content) {
+		reader = new StringReader(content);
+		// this.content = content;
+	}
 
-			for (int c = reader.read(); c != -1; c = reader.read())
-			{
-			    if (c == '[' && flag++ == 0)//错
-			        continue;
+	public List<List<Character>> read() throws IOException {
+		List<List<Character>> retr = new ArrayList<List<Character>>();
 
-			    if (c == ']' && --flag == 0)
-			        return retr;
+		int flag = 0;
+		char[] charr = ContentNormalizer.prepareCharForNormalize();
 
-			    int count = ContentNormalizer.normalize(c, charr);
-			    if (count > 0)
-			    {
-			        List<Character> chain = new ArrayList<Character>(count);
-			        for (int i = 0; i < count; ++i)
-			            chain.add(charr[i]);
-			        retr.add(chain);
-			    }
-
-			    if (flag == 0)
-			        break;
+		for (int c = reader.read(); c != -1; c = reader.read()) {
+			if (c == '[' && flag++ == 0){// 错
+				continue;
 			}
-        return retr.size() > 0 ? retr : null;
-    }
+
+			if (c == ']' && --flag == 0){
+				return retr;
+			}
+
+			int count = ContentNormalizer.normalize(c, charr);
+			if (count > 0) {
+				List<Character> chain = new ArrayList<Character>(count);
+				for (int i = 0; i < count; ++i)
+					chain.add(charr[i]);
+				retr.add(chain);
+			}
+
+			if (flag == 0)
+				break;
+		}
+		return retr.size() > 0 ? retr : null;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		ConfigNormalizer normalizer = new ConfigNormalizer("A，习近平錬");
+		for (List<List<Character>> chars = normalizer.read(); chars != null; chars = normalizer.read()) {
+			System.out.println(chars);
+		}
+	}
 }

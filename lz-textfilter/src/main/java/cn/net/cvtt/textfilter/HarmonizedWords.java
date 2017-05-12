@@ -25,12 +25,14 @@ public class HarmonizedWords {
 	private byte treatment = 0;
 
 	public String[] getRelateWords() {
-		if (StringUtils.isNullOrEmpty(relateWords))
+		if (StringUtils.isNullOrEmpty(relateWords)) {
 			return new String[0];
+		}
 		List<String> words = new ArrayList<String>();
 		for (String word : relateWords.split(",")) {
-			if (!"".equals(word))
+			if (!StringUtils.isNullOrEmpty(word)) {
 				words.add(word);
+			}
 		}
 		return words.toArray(new String[1]);
 	}
@@ -86,5 +88,4 @@ public class HarmonizedWords {
 	public void setRelateWords(String relateWords) {
 		this.relateWords = relateWords;
 	}
-
 }
