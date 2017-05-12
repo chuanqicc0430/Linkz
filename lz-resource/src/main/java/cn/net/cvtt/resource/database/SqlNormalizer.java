@@ -16,7 +16,7 @@ import org.antlr.runtime.Token;
  * 得出的formatSql = "select * from UP_User where UserId=? and name like '%?%'"
  * </code></pre>
  * 
- * @author lichunlei
+ * @author 
  *
  */
 

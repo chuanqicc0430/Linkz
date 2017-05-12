@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by gaolei 2011-1-25
- * 
- * Copyright (c) 2011 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.resource.database;
 
 import java.math.BigInteger;
@@ -32,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * 。。。
  * </code></pre>
  * 
- * @author 黄湘龙 huangxianglong@feinno.com
+ * @author 
  */
 public class DataRow {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataRow.class);

@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by wanglihui 2010-12-13
- * 
- * Copyright (c) 2010 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.resource.database;
 
 import java.util.Hashtable;

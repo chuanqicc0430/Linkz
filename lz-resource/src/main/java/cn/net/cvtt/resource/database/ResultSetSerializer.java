@@ -11,7 +11,7 @@ import javax.sql.rowset.CachedRowSet;
 /**
  * ResultSet序列化反序列化帮助类
  * 
- * @author lichunlei
+ * @author 
  *
  */
 

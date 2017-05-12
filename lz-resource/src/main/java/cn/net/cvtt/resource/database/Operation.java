@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by wanglihui 2011-1-10
- * 
- * Copyright (c) 2011 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.resource.database;
 
 import java.sql.SQLException;
@@ -21,7 +14,7 @@ import java.util.List;
  * {
  * }
  * </code></pre>
- * @author wanglihui
+ * @author 
  */
 public interface Operation
 {

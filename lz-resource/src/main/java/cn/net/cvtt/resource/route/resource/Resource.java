@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by windcraft 2011-2-1
- * 
- * Copyright (c) 2011 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.resource.route.resource;
 
 /**
@@ -13,7 +6,7 @@ package cn.net.cvtt.resource.route.resource;
  * 	名称
  * 	序号
  * 
- * @author 高磊 gaolei@feinno.com
+ * @author 
  */
 public interface Resource
 {

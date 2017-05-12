@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by gaolei 2011-1-24
- * 
- * Copyright (c) 2011 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.resource.database;
 
 import java.sql.CallableStatement;
