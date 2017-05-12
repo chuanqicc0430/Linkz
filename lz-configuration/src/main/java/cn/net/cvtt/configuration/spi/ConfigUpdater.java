@@ -1,10 +1,3 @@
-/*
- * FAE, Feinno App Engine
- *  
- * Create by lichunlei 2010-11-26
- * 
- * Copyright (c) 2010 北京新媒传信科技有限公司
- */
 package cn.net.cvtt.configuration.spi;
 
 import java.util.Date;

@@ -22,8 +22,8 @@ import cn.net.cvtt.lian.common.util.EnumParser;
 import cn.net.cvtt.resource.database.DatabaseProxy;
 import cn.net.cvtt.resource.route.ResourceFactory;
 
-public class ZKConfigurator implements ConfigBridgeListener, Configurator {
-	private static Logger LOGGER = LoggerFactory.getLogger(ZKConfigurator.class);
+public class ZookeeperConfigurator implements ConfigBridgeListener, Configurator {
+	private static Logger LOGGER = LoggerFactory.getLogger(ZookeeperConfigurator.class);
 
 	private AtomicBoolean registered = new AtomicBoolean(false);
 	

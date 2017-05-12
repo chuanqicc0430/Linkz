@@ -4,7 +4,7 @@ import cn.net.cvtt.configuration.ConfigTable;
 import cn.net.cvtt.configuration.ConfigType;
 import cn.net.cvtt.configuration.ConfigUpdateAction;
 import cn.net.cvtt.configuration.ConfigurationManager;
-import cn.net.cvtt.configuration.spi.ZKConfigurator;
+import cn.net.cvtt.configuration.spi.ZookeeperConfigurator;
 import cn.net.cvtt.imps.user.config.enums.WorkFlowType;
 import cn.net.cvtt.imps.user.config.tables.CFG_WorkFlow;
 import cn.net.cvtt.lian.common.initialization.InitialException;
@@ -37,7 +37,7 @@ public class WorkFlowHelper {
 	}
 	
 	public static void main(String[] args) throws InitialException {
-		ConfigurationManager.setConfigurator(new ZKConfigurator());
+		ConfigurationManager.setConfigurator(new ZookeeperConfigurator());
 		InitialUtil.init(ResourceFactory.class,WorkFlowHelper.class);
 		System.out.println(WorkFlowHelper.getWorkFlowByFlowType(WorkFlowType.CREATE_LIAN_AUDIT).toString());
 	}

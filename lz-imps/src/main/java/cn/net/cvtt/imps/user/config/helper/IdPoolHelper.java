@@ -4,7 +4,7 @@ import cn.net.cvtt.configuration.ConfigTable;
 import cn.net.cvtt.configuration.ConfigType;
 import cn.net.cvtt.configuration.ConfigUpdateAction;
 import cn.net.cvtt.configuration.ConfigurationManager;
-import cn.net.cvtt.configuration.spi.ZKConfigurator;
+import cn.net.cvtt.configuration.spi.ZookeeperConfigurator;
 import cn.net.cvtt.imps.user.config.tables.CFG_IdPool;
 import cn.net.cvtt.lian.common.initialization.InitialException;
 import cn.net.cvtt.lian.common.initialization.InitialUtil;
@@ -36,7 +36,7 @@ public class IdPoolHelper {
 	}
 	
 	public static void main(String[] args) throws InitialException {
-		ConfigurationManager.setConfigurator(new ZKConfigurator());
+		ConfigurationManager.setConfigurator(new ZookeeperConfigurator());
 		InitialUtil.init(ResourceFactory.class,IdPoolHelper.class);
 //		System.out.println(IdPoolHelper.isReservedNumber(10000));
 		long userId = 10000;

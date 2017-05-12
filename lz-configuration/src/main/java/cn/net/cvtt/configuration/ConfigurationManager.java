@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import cn.net.cvtt.configuration.spi.ConfigUpdater;
 import cn.net.cvtt.configuration.spi.Configurator;
-import cn.net.cvtt.configuration.spi.ZKConfigurator;
+import cn.net.cvtt.configuration.spi.ZookeeperConfigurator;
 import cn.net.cvtt.lian.common.util.SearchIndex;
 
 /**
@@ -43,7 +43,7 @@ public class ConfigurationManager {
 
 	static {
 		try {
-			configurator = new ZKConfigurator();
+			configurator = new ZookeeperConfigurator();
 		} catch (Exception t) {
 			LOGGER.error(t.toString());
 		}
