@@ -3,23 +3,17 @@ package cn.net.cvtt.configuration.resource;
 import java.util.Date;
 import java.util.List;
 
-import cn.net.cvtt.lian.common.serialization.protobuf.ProtoEntity;
-import cn.net.cvtt.lian.common.serialization.protobuf.ProtoMember;
-
 /**
  * 配置文本
  * 
  * @author 
  */
-public class ResConfigTextBuffer extends ProtoEntity
+public class ResConfigTextBuffer
 {
-	@ProtoMember(1)
 	private String text;
 
-	@ProtoMember(2)
 	private List<String> configParams;
 
-	@ProtoMember(3)
 	private Date version;
 
 	public ResConfigTextBuffer()

@@ -5,9 +5,8 @@ import java.util.List;
 import cn.net.cvtt.lian.common.serialization.protobuf.ProtoEntity;
 import cn.net.cvtt.lian.common.serialization.protobuf.ProtoMember;
 
-public class ResConfigTableRow extends ProtoEntity
+public class ResConfigTableRow 
 {
-	@ProtoMember(1)
 	private List<String> values;
 
 	public List<String> getValues()

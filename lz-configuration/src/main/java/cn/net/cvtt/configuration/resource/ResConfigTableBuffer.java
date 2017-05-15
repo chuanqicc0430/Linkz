@@ -15,8 +15,6 @@ import cn.net.cvtt.configuration.ConfigTableKey;
 import cn.net.cvtt.configuration.ConfigType;
 import cn.net.cvtt.configuration.ConfigurationFailedException;
 import cn.net.cvtt.configuration.ConfigurationNotFoundException;
-import cn.net.cvtt.lian.common.serialization.protobuf.ProtoEntity;
-import cn.net.cvtt.lian.common.serialization.protobuf.ProtoMember;
 import cn.net.cvtt.lian.common.util.AnnotationHelper;
 import cn.net.cvtt.lian.common.util.EnumParser;
 import cn.net.cvtt.lian.common.util.Flags;
@@ -25,82 +23,64 @@ import cn.net.cvtt.lian.common.util.ObjectHelper;
 /**
  * 保存ConfigTable数据的序列化缓冲类
  * 
- * @author 
+ * @author
  */
-public class ResConfigTableBuffer extends ProtoEntity
-{
-	@ProtoMember(1)
+public class ResConfigTableBuffer {
 	private String tableName;
 
-	@ProtoMember(2)
 	private Date version;
 
-	@ProtoMember(3)
 	private List<String> columns = new ArrayList<String>();
 
-	@ProtoMember(4)
 	private List<ResConfigTableRow> rows = new ArrayList<ResConfigTableRow>();
 
-	@ProtoMember(value = 5, required = false)
 	private long dynamicTableVersion;
 
-	public long getDynamicTableVersion()
-	{
+	public long getDynamicTableVersion() {
 		return dynamicTableVersion;
 	}
 
-	public void setDynamicTableVersion(long dynamicTableVersion)
-	{
+	public void setDynamicTableVersion(long dynamicTableVersion) {
 		this.dynamicTableVersion = dynamicTableVersion;
 	}
 
-	public Date getVersion()
-	{
+	public Date getVersion() {
 		return version;
 	}
 
-	public void setVersion(Date version)
-	{
+	public void setVersion(Date version) {
 		this.version = version;
 	}
 
-	public List<String> getColumns()
-	{
+	public List<String> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(List<String> columns)
-	{
+	public void setColumns(List<String> columns) {
 		this.columns = columns;
 	}
 
-	public List<ResConfigTableRow> getRows()
-	{
+	public List<ResConfigTableRow> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<ResConfigTableRow> rows)
-	{
+	public void setRows(List<ResConfigTableRow> rows) {
 		this.rows = rows;
 	}
 
-	public int rowCount()
-	{
+	public int rowCount() {
 		return rows.size();
 	}
 
-	public ResConfigTableRow getRow(int i)
-	{
+	public ResConfigTableRow getRow(int i) {
 		return rows.get(i);
 	}
 
-	public String getTableName()
-	{
+	public String getTableName() {
 		return tableName;
 	}
 
-	public void setTableName(String tableName)
-	{
+	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
 
@@ -117,8 +97,7 @@ public class ResConfigTableBuffer extends ProtoEntity
 	 * @throws ConfigurationFailedException
 	 */
 	@SuppressWarnings("unchecked")
-	public <K, V extends ConfigTableItem> ConfigTable<K, V> toTable(Class<K> keyType, Class<V> valueType) throws ConfigurationNotFoundException, ConfigurationFailedException
-	{
+	public <K, V extends ConfigTableItem> ConfigTable<K, V> toTable(Class<K> keyType, Class<V> valueType) throws ConfigurationNotFoundException, ConfigurationFailedException {
 		int columnCount = this.getColumns().size();
 		// int keyCount = keyType.getDeclaredFields().length;
 		Hashtable<K, V> innerTable = new Hashtable<K, V>();
@@ -156,9 +135,7 @@ public class ResConfigTableBuffer extends ProtoEntity
 				}
 			}
 			/*
-			 * if (!find && attr.required()) { throw new
-			 * ConfigurationNotFoundException(getTableName(), "", attr.value());
-			 * }
+			 * if (!find && attr.required()) { throw new ConfigurationNotFoundException(getTableName(), "", attr.value()); }
 			 */
 		}
 		if (!simpleKey) {
@@ -213,8 +190,9 @@ public class ResConfigTableBuffer extends ProtoEntity
 								Class<?> genericClass = Class.forName(s);
 								fieldValue = EnumParser.parseFlags(genericClass, valStr, true);
 							}
-						} else
+						} else{
 							fieldValue = ObjectHelper.convertTo(valStr, clazz);
+						}
 						// Object fieldValue = null;
 						valueFields[i].setAccessible(true);
 						valueFields[i].set(value, fieldValue);
@@ -240,7 +218,7 @@ public class ResConfigTableBuffer extends ProtoEntity
 		try {
 			table.runAfterLoad();
 		} catch (Exception e) {
-			throw new ConfigurationFailedException(ConfigType.TABLE,"runAfterLoad",e);
+			throw new ConfigurationFailedException(ConfigType.TABLE, "runAfterLoad", e);
 		}
 		return table;
 	}
