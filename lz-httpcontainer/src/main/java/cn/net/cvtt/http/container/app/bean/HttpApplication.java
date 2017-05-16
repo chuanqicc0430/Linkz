@@ -4,7 +4,7 @@ import cn.net.cvtt.resource.route.context.ApplicationCtx;
 import cn.net.cvtt.resource.route.context.ApplicationTx;
 
 /**
- * http application,注意每个application都必须添加HttpPrefix注解
+ * http application,http app 基类
  * 
  * @author zongchuanqi
  */
@@ -12,7 +12,7 @@ public abstract class HttpApplication<C extends ApplicationCtx> {
 	/**
 	 * {在这里补充功能说明}
 	 * 
-	 * @param genericParamOrder
+	 * @param 
 	 */
 	protected HttpApplication() {
 
