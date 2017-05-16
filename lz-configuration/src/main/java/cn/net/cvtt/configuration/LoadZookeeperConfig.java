@@ -7,35 +7,33 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.net.cvtt.lian.common.initialization.InitialUtil;
-import cn.net.cvtt.resource.route.ResourceFactory;
-
 /**
  * 读取配置文件
  * 
  * @author zongchuanqi
  */
-public class LoadZkConfigProperties {
+public class LoadZookeeperConfig {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoadZkConfigProperties.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoadZookeeperConfig.class);
 	private static Map<String, String> values = new HashMap<String, String>();
 	private static final String ZK_CONFIG_SETTING = "zkConfigSetting";
 	private static Object syncLock = new Object();
-	private static LoadZkConfigProperties instance = null;
+	private static LoadZookeeperConfig instance = null;
 
-	public static LoadZkConfigProperties getInstance() {
+	public static LoadZookeeperConfig getInstance() {
 		if (instance == null) {
 			synchronized (syncLock) {
 				if (instance == null) {
-					instance = new LoadZkConfigProperties();
+					instance = new LoadZookeeperConfig();
 				}
 			}
 		}
 		return instance;
 	}
 
-	private LoadZkConfigProperties() {
+	private LoadZookeeperConfig() {
 		try {
+			// 这里只从数据库加载zookeeper配置，并没有发起订阅
 			Properties properties = ConfigurationManager.loadProperties(ZK_CONFIG_SETTING, null, null);
 			values.put("host", properties.getProperty("host"));
 			values.put("rootPath", properties.getProperty("rootPath"));
@@ -43,7 +41,7 @@ public class LoadZkConfigProperties {
 			LOGGER.error("load zkConfigSetting.properties error ", e);
 		}
 	}
-	
+
 	/**
 	 * 获取 properties 文件中指定key 的值
 	 * 
@@ -56,15 +54,5 @@ public class LoadZkConfigProperties {
 		if (value == null)
 			throw new ConfigurationException();
 		return value;
-	}
-
-	public static void main(String[] args) {
-		try{
-			InitialUtil.init(ResourceFactory.class);
-			System.out.println(LoadZkConfigProperties.getInstance().getPropValue("host"));
-			System.out.println(LoadZkConfigProperties.getInstance().getPropValue("rootPath"));
-		}catch(Exception e){
-			
-		}
 	}
 }

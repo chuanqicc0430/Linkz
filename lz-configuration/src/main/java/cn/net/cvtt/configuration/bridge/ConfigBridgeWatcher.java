@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.net.cvtt.configuration.ConfigurationException;
-import cn.net.cvtt.configuration.LoadZkConfigProperties;
+import cn.net.cvtt.configuration.LoadZookeeperConfig;
 import cn.net.cvtt.configuration.bridge.ConfigBridgeDataLoader.DataMonitor;
 import cn.net.cvtt.lian.common.util.Combo2;
 
@@ -69,7 +69,7 @@ public class ConfigBridgeWatcher {
 	// }
 
 	private void internalInit() throws ConfigurationException, IOException {
-		String zkHost = LoadZkConfigProperties.getInstance().getPropValue("host");
+		String zkHost = LoadZookeeperConfig.getInstance().getPropValue("host");
 		zk = new ZooKeeper(zkHost, SESSION_TIMEOUT, new SessionWatcher());
 	}
 
@@ -84,7 +84,6 @@ public class ConfigBridgeWatcher {
 				fireNodeChanged(datas.getV1());
 			}
 		});
-
 	}
 
 	private void initZkNode(String configPath) throws KeeperException, InterruptedException {

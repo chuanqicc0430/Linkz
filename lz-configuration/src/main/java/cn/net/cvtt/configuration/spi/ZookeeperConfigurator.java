@@ -13,7 +13,7 @@ import cn.net.cvtt.configuration.ConfigType;
 import cn.net.cvtt.configuration.ConfigUpdateAction;
 import cn.net.cvtt.configuration.ConfigurationException;
 import cn.net.cvtt.configuration.ConfigurationManager;
-import cn.net.cvtt.configuration.LoadZkConfigProperties;
+import cn.net.cvtt.configuration.LoadZookeeperConfig;
 import cn.net.cvtt.configuration.bridge.ConfigBridgeListener;
 import cn.net.cvtt.configuration.bridge.ConfigBridgeWatcher;
 import cn.net.cvtt.configuration.resource.ResConfigTableBuffer;
@@ -85,7 +85,7 @@ public class ZookeeperConfigurator implements ConfigBridgeListener, Configurator
 	@Override
 	public void subscribeConfig(ConfigType type, String path, ConfigParams params) throws Exception {
 		StringBuffer configPath = new StringBuffer();
-		configPath.append(String.format("/%s/", LoadZkConfigProperties.getInstance().getPropValue("rootPath")));
+		configPath.append(String.format("/%s/", LoadZookeeperConfig.getInstance().getPropValue("rootPath")));
 		configPath.append(String.format("%s#%s", path, type.name()));
 		if (params != null) {
 			configPath.append(String.format("#%s", params.toString()));
@@ -95,9 +95,6 @@ public class ZookeeperConfigurator implements ConfigBridgeListener, Configurator
 			LOGGER.warn("Init zookeeper and zkDataLoader.");
 		}
 		ConfigBridgeWatcher.getInstance().internalInitDataLoader(configPath.toString());
-		
-//		bridge.register(this);
-//		bridge.init();
 	}
 
 	/**

@@ -53,6 +53,7 @@ public interface Configurator {
 	 * 
 	 * @param type
 	 * @param path
+	 * @param params
 	 */
 	void subscribeConfig(ConfigType type, String path, ConfigParams params) throws Exception;
 }

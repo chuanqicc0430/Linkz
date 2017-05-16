@@ -13,11 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import cn.net.cvtt.configuration.spi.ConfigUpdater;
 import cn.net.cvtt.configuration.spi.Configurator;
-import cn.net.cvtt.configuration.spi.ZookeeperConfigurator;
 import cn.net.cvtt.lian.common.util.SearchIndex;
 
 /**
- * 配置管理类，目前是基于zookeeper实现的配置管理，支持配置表和配置文本动态修改
+ * 配置管理类，支持配置表和配置文本动态修改
  * 
  * <pre>
  * 使用注意：
@@ -42,11 +41,6 @@ public class ConfigurationManager {
 	private static Logger LOGGER = LoggerFactory.getLogger(ConfigurationManager.class);
 
 	static {
-		try {
-			configurator = new ZookeeperConfigurator();
-		} catch (Exception t) {
-			LOGGER.error(t.toString());
-		}
 		updaters = new ArrayList<ConfigUpdater<?>>();
 		String[] params = new String[] { "path", "type", "params" };
 		try {
@@ -325,8 +319,9 @@ public class ConfigurationManager {
 	 * @throws IOException
 	 */
 	public static Properties convertToProperies(String text) throws IOException {
-		if (text == null)
+		if (text == null) {
 			return null;
+		}
 		Properties prop = new Properties();
 		StringReader reader = new StringReader(text);
 		prop.load(reader);
