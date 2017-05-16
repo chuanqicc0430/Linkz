@@ -18,7 +18,7 @@ import sun.misc.BASE64Encoder;
  * @author 
  *
  */
-public class LZBase64 {
+public class Base641 {
 	private static final int SIZE = 10;
 
 	private static final ArrayBlockingQueue<BASE64Encoder> base64Encoders = new ArrayBlockingQueue<BASE64Encoder>(SIZE);
@@ -33,7 +33,7 @@ public class LZBase64 {
 	private static final int[] daysToMonth366 = { 0, 0x1f, 60, 0x5b, 0x79, 0x98, 0xb6, 0xd5, 0xf4, 0x112, 0x131, 0x14f, 0x16e };
 	private static int[] daysToMonth365 = { 0, 0x1f, 0x3b, 90, 120, 0x97, 0xb5, 0xd4, 0xf3, 0x111, 0x130, 0x14e, 0x16d };
 
-	private LZBase64() {
+	private Base641() {
 	}
 
 	/**

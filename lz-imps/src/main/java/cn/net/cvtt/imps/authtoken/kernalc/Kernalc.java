@@ -9,7 +9,7 @@ package cn.net.cvtt.imps.authtoken.kernalc;
 
 import java.io.IOException;
 
-import cn.net.cvtt.lian.common.crypt.LZBase64;
+import cn.net.cvtt.lian.common.crypt.Base641;
 import cn.net.cvtt.imps.authtoken.kernalc.crypto.Crypto;
 import cn.net.cvtt.imps.authtoken.kernalc.sigininfo.SignInInfo;
 
@@ -60,10 +60,10 @@ public class Kernalc {
 	 * @throws IOException
 	 */
 	public synchronized static Kernalc fromBase64String(String s) throws IOException {
-		byte[] data = LZBase64.base64Decode(s);
+		byte[] data = Base641.base64Decode(s);
 		int encryptedSize = data.length - 4;
 		Kernalc c = new Kernalc();
-		c.expire = LZBase64.getIntDotNet(data, 0);
+		c.expire = Base641.getIntDotNet(data, 0);
 		c.encryptedBuffer = new byte[encryptedSize];
 		System.arraycopy(data, 4, c.encryptedBuffer, 0, encryptedSize);
 		return c;
@@ -91,9 +91,9 @@ public class Kernalc {
 		}
 		int size = encryptedBuffer.length;
 		byte[] buffer = new byte[size + 4];
-		System.arraycopy(LZBase64.intToBytes(expire), 0, buffer, 0, 3);
+		System.arraycopy(Base641.intToBytes(expire), 0, buffer, 0, 3);
 		System.arraycopy(encryptedBuffer, 0, buffer, 4, size);
-		return LZBase64.base64Encode(buffer, lineSep, endWithLineSep);
+		return Base641.base64Encode(buffer, lineSep, endWithLineSep);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Kernalc {
 
 		byte[] shaBuffer = null;
 
-		shaBuffer = LZBase64.computeSHA1Hash(infoBuffer);
+		shaBuffer = Base641.computeSHA1Hash(infoBuffer);
 
 		byte[] plainBuffer = new byte[infoBuffer.length + shaBuffer.length];
 
@@ -165,7 +165,7 @@ public class Kernalc {
 			throw new Exception("Has sum invalid!");
 		}
 
-		byte[] shaBuffer = LZBase64.computeSHA1Hash(plainBuffer, 0, plainBuffer.length - 20);
+		byte[] shaBuffer = Base641.computeSHA1Hash(plainBuffer, 0, plainBuffer.length - 20);
 		if (shaBuffer == null) {
 			throw new Exception("Has Sum Invalid");
 		}

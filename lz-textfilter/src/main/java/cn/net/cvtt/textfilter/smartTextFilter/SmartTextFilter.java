@@ -39,7 +39,6 @@ public class SmartTextFilter {
 
 	private static HmzTree tree;
 
-
 	@Initializer
 	public static void initialize() throws Exception {
 		InitialUtil.init(HmzContextFiltered.class, ResourceFactory.class);
@@ -287,16 +286,16 @@ public class SmartTextFilter {
 					}
 				}
 				// return haltOnBlock ? null : filter.Hit;
-				if (haltOnBlock)
+				if (haltOnBlock) {
 					result.TValue = null;
-				else
+				} else {
 					result.TValue = filter.getHit();
+				}
 				result.RValue = treatment;
 				return result;
 			}
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			logger.error("stf execution error ", ex);
 		} finally {
 			try {

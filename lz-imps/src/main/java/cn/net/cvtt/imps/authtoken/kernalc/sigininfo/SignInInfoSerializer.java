@@ -3,7 +3,7 @@ package cn.net.cvtt.imps.authtoken.kernalc.sigininfo;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import cn.net.cvtt.lian.common.crypt.LZBase64;
+import cn.net.cvtt.lian.common.crypt.Base641;
 
 /**
  * SignInInfoV4Serializer凭证序列化类
@@ -36,31 +36,31 @@ public class SignInInfoSerializer {
 	 */
 	public static byte[] serialize(SignInInfo info) throws Exception {
 		long ticks = 0;
-		ticks = LZBase64.getJavaMinDateDotNetTicks();
+		ticks = Base641.getJavaMinDateDotNetTicks();
 
 		int size = 48;
 
 		byte[] buffer = new byte[size];
 
 		int index = 0;
-		LZBase64.putIntDotNet(buffer, info.getNonce(), index);// Nonce 4
+		Base641.putIntDotNet(buffer, info.getNonce(), index);// Nonce 4
 		index += 4;
-		LZBase64.putLongDotNet(buffer, info.getCreateTime().getTime() * 10000 + ticks + OFFSETTICKS, index); // CreateTime +8小时 与.net互通兼容
+		Base641.putLongDotNet(buffer, info.getCreateTime().getTime() * 10000 + ticks + OFFSETTICKS, index); // CreateTime +8小时 与.net互通兼容
 		// 12
 		index += 8;
-		LZBase64.putLongDotNet(buffer, info.getExpireTime().getTime() * 10000 + ticks + OFFSETTICKS, index);// ExpireTime
+		Base641.putLongDotNet(buffer, info.getExpireTime().getTime() * 10000 + ticks + OFFSETTICKS, index);// ExpireTime
 		// 20
 		index += 8;
-		LZBase64.putIntDotNet(buffer, info.getUserStatusFlags(), index); // UserStatusV2
+		Base641.putIntDotNet(buffer, info.getUserStatusFlags(), index); // UserStatusV2
 		// 31
 		index += 4;
-		LZBase64.putLongDotNet(buffer, info.getUserIp(), index);// UserIp
+		Base641.putLongDotNet(buffer, info.getUserIp(), index);// UserIp
 		// 39
 		index += 8;
-		LZBase64.putLongDotNet(buffer, info.getUserId(), index); // UserId
+		Base641.putLongDotNet(buffer, info.getUserId(), index); // UserId
 		// 43
 		index += 8;
-		LZBase64.putLongDotNet(buffer, info.getMobileNo(), index); // UserId
+		Base641.putLongDotNet(buffer, info.getMobileNo(), index); // UserId
 		return buffer;
 	}
 
@@ -77,27 +77,27 @@ public class SignInInfoSerializer {
 
 	public static SignInInfo deSerialize(byte[] buffer, int offset, boolean isJavaUtc) throws Exception {
 		SignInInfo info = new SignInInfo();
-		info.setNonce(LZBase64.getIntDotNet(buffer, offset));
+		info.setNonce(Base641.getIntDotNet(buffer, offset));
 		offset += 4;
 		if (!isJavaUtc)
-			info.setCreateTime(LZBase64.dotNetTicks2JavaDate((LZBase64.getLongDotNet(buffer, offset) - OFFSETTICKS))); // -8小时与.net互通
+			info.setCreateTime(Base641.dotNetTicks2JavaDate((Base641.getLongDotNet(buffer, offset) - OFFSETTICKS))); // -8小时与.net互通
 		else
-			info.setCreateTime(LZBase64.dotNetTicks2JavaDate(LZBase64.getLongDotNet(buffer, offset)));
+			info.setCreateTime(Base641.dotNetTicks2JavaDate(Base641.getLongDotNet(buffer, offset)));
 
 		offset += 8;
 		if (!isJavaUtc)
-			info.setExpireTime(LZBase64.dotNetTicks2JavaDate(LZBase64.getLongDotNet(buffer, offset) - OFFSETTICKS)); // -8小时与.net互通
+			info.setExpireTime(Base641.dotNetTicks2JavaDate(Base641.getLongDotNet(buffer, offset) - OFFSETTICKS)); // -8小时与.net互通
 		else
-			info.setExpireTime(LZBase64.dotNetTicks2JavaDate(LZBase64.getLongDotNet(buffer, offset)));
+			info.setExpireTime(Base641.dotNetTicks2JavaDate(Base641.getLongDotNet(buffer, offset)));
 
 		offset += 8;
-		info.setUserStatusFlags(LZBase64.getIntDotNet(buffer, offset));
+		info.setUserStatusFlags(Base641.getIntDotNet(buffer, offset));
 		offset += 4;
-		info.setUserIp(LZBase64.getLongDotNet(buffer, offset));
+		info.setUserIp(Base641.getLongDotNet(buffer, offset));
 		offset += 8;
-		info.setUserId(LZBase64.getLongDotNet(buffer, offset));
+		info.setUserId(Base641.getLongDotNet(buffer, offset));
 		offset += 8;
-		info.setMobileNo(LZBase64.getLongDotNet(buffer, offset));
+		info.setMobileNo(Base641.getLongDotNet(buffer, offset));
 
 		return info;
 	}
