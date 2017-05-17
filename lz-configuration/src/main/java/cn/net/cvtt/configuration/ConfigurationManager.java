@@ -288,9 +288,11 @@ public class ConfigurationManager {
 	public static void updateConfig(ConfigType type, String path, String params) throws ConfigurationException {
 		try {
 			List<ConfigUpdater<?>> list = updaterIndex.find(path, type, params);
-			if (list != null && list.size() > 0)
-				for (ConfigUpdater updater : list)
+			if (list != null && list.size() > 0){
+				for (ConfigUpdater updater : list){
 					updater.update();
+				}
+			}
 		} catch (Exception e) {
 			String msg = String.format("updateConfig(%s, %s) FAILED!", path, type.toString());
 			LOGGER.error(msg, e);

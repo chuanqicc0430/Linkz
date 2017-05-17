@@ -42,87 +42,72 @@ package cn.net.cvtt.lian.common.util;
  * </pre>
  * <p>
  * 
- * @author 
+ * @author
  * @see EnumInteger
  * @see EnumParser
  * @param <E>
  */
-public class Flags<E extends EnumInteger>
-{
-	public Flags(int value)
-	{
+public class Flags<E extends EnumInteger> {
+	public Flags(int value) {
 		this.value = value;
 	}
-	
-	public Flags(E value)
-	{
+
+	public Flags(E value) {
 		this.value = value.intValue();
 	}
 
-	public Flags<E> or(E rval)
-	{
+	public Flags<E> or(E rval) {
 		this.value = this.value | rval.intValue();
 		return this;
 	}
-	
-	public Flags<E> or(Flags<E> rval)
-	{
+
+	public Flags<E> or(Flags<E> rval) {
 		this.value = this.value | rval.value;
 		return this;
 	}
 
-	public Flags<E> and(Flags<E> rval)
-	{
+	public Flags<E> and(Flags<E> rval) {
 		this.value = this.value & rval.value;
 		return this;
 	}
 
-	public Flags<E> and(E rval)
-	{
+	public Flags<E> and(E rval) {
 		this.value = this.value & rval.intValue();
 		return this;
 	}
-	
-	public Flags<E> xor(E rval)
-	{
+
+	public Flags<E> xor(E rval) {
 		this.value = this.value ^ rval.intValue();
-		return this; 
+		return this;
 	}
 
-	public boolean has(E rval)
-	{
+	public boolean has(E rval) {
 		return (value & rval.intValue()) > 0;
 	}
-	
-	public void setFlag(E mask, boolean bool)
-	{
-		value = (value ^ (value & mask.intValue())) | (bool ? mask.intValue() : 0);   
+
+	public void setFlag(E mask, boolean bool) {
+		value = (value ^ (value & mask.intValue())) | (bool ? mask.intValue() : 0);
 	}
-	
-	public void setFlags(E mask, int value)
-	{
+
+	public void setFlags(E mask, int value) {
 		int order = getMaskOrder(mask.intValue());
 		this.value = (this.value ^ (this.value & mask.intValue())) | (value << order);
 	}
-	
-	public boolean getFlag(E mask)
-	{
+
+	public boolean getFlag(E mask) {
 		return (value & mask.intValue()) > 0;
 	}
-	
-	public int getFlags(E mask)
-	{
+
+	public int getFlags(E mask) {
 		int order = getMaskOrder(mask.intValue());
 		return (value & mask.intValue()) >> order;
 	}
-	
-	public int extract(E mask)
-	{
+
+	public int extract(E mask) {
 		return (value & mask.intValue()) >> getMaskOrder(mask);
 	}
 
-	public static <E extends EnumInteger> int getMaskOrder(E e)
-	{
+	public static <E extends EnumInteger> int getMaskOrder(E e) {
 		int mask = e.intValue();
 		int n = 0;
 		while (mask > 0) {
@@ -134,13 +119,11 @@ public class Flags<E extends EnumInteger>
 		return n;
 	}
 
-	public static <E extends EnumInteger> Flags<E> valueOf(int value)
-	{
+	public static <E extends EnumInteger> Flags<E> valueOf(int value) {
 		return new Flags<E>(value);
 	}
 
-	public static <E extends EnumInteger> Flags<E> of(E first, E... last)
-	{
+	public static <E extends EnumInteger> Flags<E> of(E first, E... last) {
 		int a = first.intValue();
 		for (E e : last) {
 			a |= e.intValue();
@@ -151,19 +134,16 @@ public class Flags<E extends EnumInteger>
 	private int value;
 
 	@Deprecated
-	public int value()
-	{
+	public int value() {
 		return value;
 	}
-	
-	public int intValue()
-	{
+
+	public int intValue() {
 		return value;
 	}
-	
+
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (!(obj instanceof Flags))
@@ -173,13 +153,11 @@ public class Flags<E extends EnumInteger>
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return super.hashCode();
-	}	
-	
-	public static int getMaskOrder(int mask)
-	{
+	}
+
+	public static int getMaskOrder(int mask) {
 		int n = 0;
 		while (mask > 0) {
 			if ((mask & 1) > 0)
@@ -189,38 +167,32 @@ public class Flags<E extends EnumInteger>
 		}
 		throw new RuntimeException("Holyshit!!!");
 	}
-	
+
 	/**
 	 * 传入Flag使用的枚举类，输出flag对应的内容
+	 * 
 	 * @param clazz
 	 * @return
 	 */
-	public String toString(Class clazz)
-	{
+	public String toString(Class clazz) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Flags : ");
-		try{
-				if(clazz.isEnum())
-				{		
-					Object[] objs = clazz.getEnumConstants();
-					for(Object obj : objs)
-					{
-						if(obj instanceof EnumInteger)
-						{
-							int intValue = ((EnumInteger)obj).intValue();
-							if((this.value & intValue) == intValue)
-							{
-								sb.append(" | "+obj.toString());
-							}
+		try {
+			if (clazz.isEnum()) {
+				Object[] objs = clazz.getEnumConstants();
+				for (Object obj : objs) {
+					if (obj instanceof EnumInteger) {
+						int intValue = ((EnumInteger) obj).intValue();
+						if ((this.value & intValue) == intValue) {
+							sb.append(" | " + obj.toString());
 						}
 					}
-					
 				}
+
 			}
-			catch(Exception exc)
-			{
-				sb.append(" error -> intCode : " + this.value);
-			}
+		} catch (Exception exc) {
+			sb.append(" error -> intCode : " + this.value);
+		}
 		return sb.toString();
-	 }	
+	}
 }

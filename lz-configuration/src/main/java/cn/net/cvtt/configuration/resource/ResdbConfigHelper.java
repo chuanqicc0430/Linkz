@@ -90,17 +90,18 @@ public class ResdbConfigHelper {
 		for (int i = 0; i < table.getRowCount(); i++) {
 			ResConfigTableRow row = new ResConfigTableRow();
 			DataRow dr = table.getRow(i);
-			ArrayList<String> vals = new ArrayList<String>(table.getColumnCount());
+			List<String> vals = new ArrayList<String>(table.getColumnCount());
 			for (int j = 0; j < table.getColumnCount(); j++) {
-				if (dr.getObject(j + 1) == null)
+				if (dr.getObject(j + 1) == null) {
 					vals.add("");
-				else {
+				} else {
 					if (dr.getObject(j + 1).toString().indexOf("ClobImpl") >= 0) {
 						Clob clob = ((Clob) dr.getObject(j + 1));
 						String s = clob.getSubString(1, (int) clob.length());
 						vals.add(s);
-					} else
+					} else {
 						vals.add(dr.getObject(j + 1).toString());
+					}
 				}
 			}
 			row.setValues(vals);
@@ -108,7 +109,6 @@ public class ResdbConfigHelper {
 		}
 		tableBuffer.setRows(rows);
 		return tableBuffer;
-
 	}
 
 	/**

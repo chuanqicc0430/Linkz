@@ -158,8 +158,7 @@ public class ResConfigTableBuffer {
 				}
 			}
 		}
-		if (this.getRows() != null) // 这都不能兼容，小心
-		{
+		if (this.getRows() != null) {
 			for (ResConfigTableRow row : this.getRows()) {
 				try {
 					Object key = null;
@@ -167,16 +166,19 @@ public class ResConfigTableBuffer {
 
 					value = valueType.newInstance();
 
-					if (!simpleKey)
+					if (!simpleKey){
 						key = keyType.newInstance();
+					}
 
 					for (int i = 0; i < columnCount; i++) {
-						if (valueFields[i] == null)
+						if (valueFields[i] == null){
 							continue;
+						}
 
 						String valStr = row.getValue(i);
-						if (valueAttrs[i].trim() && valStr != null)
+						if (valueAttrs[i].trim() && valStr != null){
 							valStr = valStr.trim();
+						}
 						Class<?> clazz = valueFields[i].getType();
 						Object fieldValue = null;
 						if (clazz.equals(Flags.class)) {
@@ -190,7 +192,7 @@ public class ResConfigTableBuffer {
 								Class<?> genericClass = Class.forName(s);
 								fieldValue = EnumParser.parseFlags(genericClass, valStr, true);
 							}
-						} else{
+						} else {
 							fieldValue = ObjectHelper.convertTo(valStr, clazz);
 						}
 						// Object fieldValue = null;

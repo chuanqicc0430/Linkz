@@ -1,5 +1,5 @@
 ## Linkz
-**Linkz**是Java分布式架构组件池的整合方案，结合Dubbox，Thrift等RPC框架，可快速搭建互联网应用的后端平台。
+**Linkz**是Java分布式架构组件池的整合方案，结合Dubbox，Thrift、Spring Cloud等RPC框架，可快速搭建互联网应用的后端平台。
 
 ## Linkz当前的主要功能
 
