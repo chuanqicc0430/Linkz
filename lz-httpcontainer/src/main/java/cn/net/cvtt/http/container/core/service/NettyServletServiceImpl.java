@@ -21,6 +21,7 @@ import cn.net.cvtt.http.container.core.server.NettyServletEngine;
 import cn.net.cvtt.lian.common.http.message.HttpMethod;
 import cn.net.cvtt.lian.common.http.message.HttpPrefix;
 import cn.net.cvtt.resource.route.context.ApplicationCtx;
+import io.netty.handler.codec.http.HttpVersion;
 
 /**
  * handler和application对接的纽带:</br> 1.启动netty server,2.管理Application，对接到http handler
@@ -120,7 +121,7 @@ public class NettyServletServiceImpl implements NettyServletService {
 		String[] protocals = httpPrefix.protocal();
 		for(String protocal : protocals)
 		{
-			io.netty.handler.codec.http.HttpVersion httpVersion = io.netty.handler.codec.http.HttpVersion.valueOf(protocal);
+			HttpVersion httpVersion = HttpVersion.valueOf(protocal);
 			// method
 			HttpMethod[] methodArray = httpPrefix.method();
 			UriHandlerMapper uriHandlerMapper = null;

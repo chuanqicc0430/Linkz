@@ -34,9 +34,10 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpHeaders.Names;
+import io.netty.handler.codec.http.HttpHeaderNames;
+import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.CharsetUtil;
 
@@ -74,13 +75,13 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 		// 输出请求日志
 		ServletLogUtil.recordRequestLog(httpRequest);
 
-		if (HttpHeaders.is100ContinueExpected(httpRequest)) {
+		if (HttpUtil.is100ContinueExpected(httpRequest)) {
 			ctx.write(new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.CONTINUE));
 		}
 
 		// build request and response
 		FullHttpResponse httpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-		String contextPath = UriUtil.parseContextPath(httpRequest.getUri());
+		String contextPath = UriUtil.parseContextPath(httpRequest.uri());
 
 		NettyServletRequest nettyServletRequest = new NettyServletRequest(httpRequest, contextPath);
 		NettyServletResponse nettyServletResponse = new NettyServletResponse(httpResponse);
@@ -88,7 +89,7 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 		// 过滤器
 		doFilter(nettyServletRequest, nettyServletResponse);
 		// 构造servlet请求参数
-		NettyServletHolder nettyServletHolder = nettyServletContextHandler.getHandler(contextPath, httpRequest.getProtocolVersion(), httpRequest.getMethod(), httpRequest, httpResponse);
+		NettyServletHolder nettyServletHolder = nettyServletContextHandler.getHandler(contextPath, httpRequest.protocolVersion(), httpRequest.method(), httpRequest, httpResponse);
 		// 响应调度,处理业务逻辑
 		doHandler(ctx, nettyServletHolder, httpRequest, httpResponse, nettyServletRequest, nettyServletResponse);
 
@@ -96,10 +97,10 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 
 		// 响应请求，或者关闭连接
 		nettyServletResponse.getWriter().flush();
-		boolean keepAlive = HttpHeaders.isKeepAlive(httpRequest);
+		boolean keepAlive = HttpUtil.isKeepAlive(httpRequest);
 		if (keepAlive) {
-			httpResponse.headers().set(Names.CONTENT_LENGTH, httpResponse.content().readableBytes());
-			httpResponse.headers().set(Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+			httpResponse.headers().set(HttpHeaderNames.CONTENT_LENGTH, httpResponse.content().readableBytes());
+			httpResponse.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
 		}
 
 		ChannelFuture future = ctx.write(httpResponse);
@@ -108,7 +109,7 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 			future.addListener(ChannelFutureListener.CLOSE);
 		}
 		// 应答日志
-		ServletLogUtil.recordResponseLog(httpRequest.getUri(), httpResponse);
+		ServletLogUtil.recordResponseLog(httpRequest.uri(), httpResponse);
 	}
 
 	/**
@@ -217,7 +218,7 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 				sendError(ctx, HttpResponseStatus.UNAUTHORIZED);
 				return;
 			} else if (cause instanceof ResourceNotFoundException) {
-				sendError(ctx, HttpResponseStatus.SERVICE_UNAVAILABLE);
+				sendError(ctx, HttpResponseStatus.NOT_FOUND);
 				return;
 			} else if (cause instanceof ServletException) {
 				sendError(ctx, HttpResponseStatus.INTERNAL_SERVER_ERROR);
@@ -233,7 +234,7 @@ public class NettyServletHandler extends ChannelInboundHandlerAdapter {
 	private void sendError(ChannelHandlerContext ctx, HttpResponseStatus rspStatus) {
 		ByteBuf content = Unpooled.copiedBuffer("Failure: " + rspStatus.toString() + "\r\n", CharsetUtil.UTF_8);
 		FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, rspStatus, content);
-		response.headers().set(Names.CONTENT_TYPE, "application/json; charset=UTF-8");
+		response.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json; charset=UTF-8");
 		// response.headers().set(Names.CONTENT_LENGTH, 0);
 		ctx.write(response).addListener(ChannelFutureListener.CLOSE);
 		LOGGER.error(String.format("NettyServlet---------Response Error is %s", response));

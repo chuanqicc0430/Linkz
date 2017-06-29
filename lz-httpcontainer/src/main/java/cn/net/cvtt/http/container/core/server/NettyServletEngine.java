@@ -28,7 +28,7 @@ public class NettyServletEngine {
 	private volatile Channel serverChannel;
 	private NettyServletChannelInitializer nettyServletChannelInitializer;
 	private EventLoopGroup bossGroup = new NioEventLoopGroup();
-	private EventLoopGroup workerGroup = new NioEventLoopGroup();
+	private EventLoopGroup workerGroup = new NioEventLoopGroup();//默认CPU*2
 
 	private NettyServletConfig nettyServletConfiguration;
 	private NettyServletContextHandler nettyServletContextHandler;
@@ -38,7 +38,7 @@ public class NettyServletEngine {
 		this.nettyServletContextHandler = nettyServletContextHandler;
 	}
 
-	public Channel startServer() {
+	public void startServer() {
 
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_REUSEADDR, true);
@@ -53,12 +53,11 @@ public class NettyServletEngine {
 			address = new InetSocketAddress(nettyServletConfiguration.getIp(), nettyServletConfiguration.getPort());
 		}
 		try {
-			ChannelFuture sync = bootstrap.bind(address).sync();
+			ChannelFuture future = bootstrap.bind(address).sync();
 			LOGGER.debug(String.format("NettyServletEngine------------start listen port %s", nettyServletConfiguration.getPort()));
-			return sync.channel();
+			future.channel().closeFuture().sync();
 		} catch (InterruptedException ex) {
 			LOGGER.error("NettyServletEngine init failure", ex);
-			return null;
 		}
 
 	}
